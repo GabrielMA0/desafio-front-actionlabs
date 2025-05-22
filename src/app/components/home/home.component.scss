@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+$branded: #07B0FB;
+$grey02: #D9D9D9;
+$grey03: #F4F4F4;
+$dark01: #262626;
+$dark02: #3F3F3F;
+$alert-green: #69C669;
+$alert-red: #E54E4E;
+
+.app {
+    font-family: 'Roboto', sans-serif;
+    background: #f2f2f2;
+    color: $dark02;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    header {
+        text-align: center;
+        margin-bottom: 32px;
+
+        .container-logo {
+            border-bottom: 2px solid $grey02;
+            margin-bottom: 32px;
+
+            .logo {
+                margin-bottom: 16px;
+            }
+        }
+
+        h1 {
+            color: $branded;
+            font-size: 24px;
+            margin: 0;
+        }
+    }
+
+    main {
+        padding: 15px;
+
+        .input-section {
+            display: flex;
+            flex-direction: row;
+            gap: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #E5E5E5;
+
+            @media (max-width: 425px) {
+                flex-direction: column;
+            }
+
+            .input-error {
+                border: 1px solid $alert-red !important;
+
+                &+label {
+                    color: $alert-red !important;
+                }
+            }
+
+            .form-floating {
+                width: 100%;
+            }
+
+            input {
+                font-size: 1rem;
+                border: none;
+                border-bottom: 1px solid $grey02;
+                background-color: $grey03;
+                border-radius: 0;
+
+                &:focus {
+                    outline: none;
+                    border-bottom: 2px solid $branded;
+                    box-shadow: none;
+
+                    &+label {
+                        color: $branded;
+                    }
+                }
+            }
+
+            button {
+                background: $branded;
+                color: white;
+                padding: 0.8rem;
+                font-size: 1rem;
+                border: none;
+                border-radius: 999px;
+                cursor: pointer;
+                width: 100%;
+                max-height: 58px;
+            }
+        }
+
+        .exchange-result {
+
+            padding: 32px 0;
+
+            p {
+                margin: 0;
+
+                &:first-child {
+                    font-weight: bold;
+                }
+            }
+
+            .rate-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                div {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+
+                    @media (max-width: 425px) {
+                        flex-direction: column;
+                        align-items: baseline;
+                        gap: 0;
+                    }
+                }
+
+                .currency-pair {
+                    color: $branded;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                .timestamp {
+                    font-size: 0.8rem;
+                    color: #666;
+                }
+            }
+
+            .rate-value {
+                background: #e6f7ff;
+                text-align: center;
+                font-size: 2rem;
+                padding: 1rem;
+                margin-top: 1rem;
+                border-radius: 6px;
+                color: $branded;
+                font-weight: bold;
+            }
+        }
+
+        .history {
+            margin-bottom: 40px;
+            border-bottom: 2px solid $branded;
+            transition: height 0.5s ease;
+            overflow: hidden;
+
+            .history-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+                margin-bottom: 1rem;
+                width: 100%;
+                background-color: transparent;
+
+                svg {
+                    fill: $branded;
+                }
+
+                p {
+                    font-weight: bold;
+                    margin: 0;
+                }
+
+                .toggle-history {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    color: $branded;
+                    cursor: pointer;
+                }
+            }
+
+            .history-main {
+                background-color: $grey03;
+                padding: 10px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+                overflow: auto;
+                height: 500px;
+
+                .history-item {
+                    background: white;
+                    padding: 1rem;
+                    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    flex-direction: column;
+                    width: 300px;
+
+                    .date {
+                        font-weight: bold;
+                        color: $branded;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    p {
+                        margin: 0.2rem 0;
+                    }
+
+                    .container-values {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+
+                        P {
+                            font-size: 11px;
+                            font-weight: 500;
+                            line-height: 14px;
+
+                            strong {
+                                font-size: 16px;
+                                font-weight: 600;
+                                line-height: 24px;
+                                padding-left: 14px;
+
+                                svg {
+                                    vertical-align: bottom;
+                                }
+                            }
+                        }
+
+                        .diff {
+                            font-weight: bold;
+
+                            &.up {
+                                color: $alert-green;
+                            }
+
+                            &.down {
+                                color: $alert-red;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    footer {
+        margin-top: auto;
+        text-align: center;
+        background: $branded;
+        color: white;
+        padding: 0.5rem;
+        font-size: 12px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    // animations
+
+    .animation-in {
+        height: 500px;
+    }
+
+    .animation-out {
+        height: 44px;
+    }
+}

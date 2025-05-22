@@ -1,0 +1,90 @@
+<div class="app">
+    <header>
+        <div class="container-logo">
+            <img src="/logo/Action Labs.jpg" alt="Action Labs logo" class="logo" />
+        </div>
+        <h1>BRL EXCHANGE RATE</h1>
+    </header>
+
+    <main>
+        
+        <div class="input-section">
+            <div class="form-floating">
+                <input type="email" [ngClass]="{ 'is-invalid': emptyInput, 'input-error': emptyInput }" class="form-control" #currency id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Enter the currency code</label>
+                @if(emptyInput){
+                    <span class="text-danger">Por favor, preencha o campo!</span>
+                }
+            </div>
+          <button (click)="convertCurrency(currency.value)">EXCHANGE RESULT</button>
+        </div>
+        
+        @if(isLoading){
+            <div class="d-flex justify-content-center loading opacity">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        } @else{
+            @if(showExchangeResult){
+                <div class="exchange-result">
+                    <div class="rate-header">
+                        <div>
+                            <p>Exchange rate now</p>
+                            <p class="timestamp">{{exchangeRateData.lastUpdatedAt}}</p>
+                        </div>
+                      <span class="currency-pair">{{exchangeRateData.fromSymbol}}/BRL</span>
+                    </div>
+                    <div class="rate-value">
+                        R$ {{ exchangeRateData.exchangeRate.toFixed(2) }}
+                    </div>
+                </div>
+              
+                <div class="history {{ showLastDays ? 'animation-in' : 'animation-out'}}">
+
+                    <button class="history-header" (click)="getLastThirtyDays(exchangeRateData.fromSymbol)">
+                      <p>LAST 30 DAYS</p>
+
+                      @if(showLastDays){
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-440v-80h560v80H200Z"/></svg>
+                        } @else{
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                      }
+
+                    </button>
+
+                        
+                    <div class="history-main ">
+                        @for(item of dailyExchangeRateData.data; track $index){
+                            <div class="history-item">
+                            <p class="date">{{item.formattedDate }}</p>
+                            <div class="container-values">
+                                <p>OPEN: <strong>{{item.open}}</strong></p>
+                                <p>HIGH: <strong>{{item.high}}</strong></p>
+                                <p>CLOSE: <strong>{{item.close}}</strong></p>
+                                <p>LOW: <strong>{{item.low}}</strong></p>
+                                <p>CLOSE DIFF (%): 
+                                    <strong  class="diff {{ item.closeDiff.toString().includes('-') ? 'down' : 'up'}}">
+                                        {{item.closeDiff}}% 
+
+                                        @if(item.closeDiff.toString().includes('-')){
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#E54E4E"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+                                        } @else{
+                                            <svg style=" transform:rotate(180deg)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#69C669"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+                                        }
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+              }
+            
+        }  
+    </main>
+    <footer>
+      <p>Copyright 2022 - Action Labs</p>
+    </footer>
+  </div>
+  
